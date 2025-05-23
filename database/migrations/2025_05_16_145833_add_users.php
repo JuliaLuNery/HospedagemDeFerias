@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('sobrenome')->nullable()->after('name');
-            $table->string('nif')->nullable()->after('email');
-            $table->string('telefone')->unique()->after('nif');
+            $table->string('nif')->unique()->after('email');
+            $table->string('telefone')->nullable()->after('nif');
             $table->date('morada')->nullable()->after('telefone');
             $table->text('data_nascimento')->nullable()->after('morada');
         });
