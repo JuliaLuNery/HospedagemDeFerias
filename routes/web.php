@@ -22,4 +22,10 @@ Route::post('/enviar-mail',[MailController::class, 'sendReservationEmail'] )
 ->middleware('auth')
 ->name('send.email');
 
+
+Route::get('/inicial', function () {
+    return view('site.index');
+});
+
+
 require __DIR__.'/auth.php';
