@@ -9,4 +9,11 @@ class BensLocaveis extends Model
 {
     /** @use HasFactory<\Database\Factories\BensLocaveisFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'timestamps',
+    ];
+
+
 }

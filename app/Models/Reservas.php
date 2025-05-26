@@ -9,4 +9,10 @@ class Reservas extends Model
 {
     /** @use HasFactory<\Database\Factories\ReservasFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'timestamps',
+    ];
+
 }
