@@ -23,7 +23,7 @@ Route::post('/enviar-mail',[MailController::class, 'sendReservationEmail'] )
 ->name('send.email');
 
 
-Route::get('/inicial', function () {
+Route::get('/home', function () {
     return view('site.index');
 });
 
