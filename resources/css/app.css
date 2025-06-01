@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "tailwindcss";
+@source "../views";
 
 /* Fonte */
 @import url('https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&family=Patua+One&display=swap');
 
-.patua-one-regular {
+/* .patua-one-regular {
   font-family: "Patua One", serif;
   font-weight: 400;
   font-style: normal;
@@ -16,11 +18,43 @@
   font-family: "National Park", sans-serif;
   font-optical-sizing: auto;
   /* font-weight: <weight>; */
-  font-style: normal;
+  /* font-style: normal;
+} */
+
+/* Paleta de Cores
+Laranja: #ff501a
+Azul: #1c1c6b
+Preto: #151516
+Branco: #ededf2
+*/
+
+/* h1, h2, h3 {
+  font-family: 'Poppins', sans-serif;
+}
+ */
+
+ h1{
+  font-family: "Patua One", serif;
+ }
+
+.titulo {
+     font-family: "Patua One", serif !important;
+     font-size: 70px !important;
+     text-align: center;
+     color: #1c1c6b !important;
 }
 
+label{
+    font-family: "National Park", sans-serif;
+}
 
-h1{
-    font-family: "Patua One", serif;
-    font-size: large;
+input, button{
+  font-family: "National Park", sans-serif;
+  color:  #151516;
+}
+
+a{
+    font-family: "National Park", sans-serif;
+    color:  #4f4f52;
+    font-weight: 200;
 }

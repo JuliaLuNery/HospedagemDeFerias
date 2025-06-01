@@ -3,15 +3,14 @@
 @section('content')
 
 
-
-
-
+<h1 class="titulo">Descubra a sua próxima paixão!</h1>
+<br><br>
 
 
 
 
 {{-- Galeria de imagens --}}
-<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 mx-6">
   <div>
     <img class="object-cover object-center w-full h-40 max-w-full rounded-lg"
       src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80"
