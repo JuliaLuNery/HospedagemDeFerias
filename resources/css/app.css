@@ -6,20 +6,26 @@
 @source "../views";
 
 /* Fonte */
-@import url('https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&family=Patua+One&display=swap');
 
-/* .patua-one-regular {
-  font-family: "Patua One", serif;
-  font-weight: 400;
+
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.oxanium {
+  font-family: "Oxanium", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: <weight>; */
   font-style: normal;
 }
 
-.national-park {
-  font-family: "National Park", sans-serif;
+
+.work-sans {
+  font-family: "Work Sans", sans-serif;
   font-optical-sizing: auto;
   /* font-weight: <weight>; */
-  /* font-style: normal;
-} */
+  font-style: normal;
+}
+
 
 /* Paleta de Cores
 Laranja: #ff501a
@@ -34,27 +40,28 @@ Branco: #ededf2
  */
 
  h1{
-  font-family: "Patua One", serif;
+  font-family: 'Oxanium', sans-serif;
  }
 
 .titulo {
-     font-family: "Patua One", serif !important;
-     font-size: 70px !important;
+     font-family: 'Oxanium', sans-serif;
+     font-size: 70px;
+     font-weight: 600;
      text-align: center;
-     color: #1c1c6b !important;
+     color: #1c1c6b;
 }
 
 label{
-    font-family: "National Park", sans-serif;
+    font-family: 'Work Sans', sans-serif;
 }
 
 input, button{
-  font-family: "National Park", sans-serif;
+  font-family: 'Work Sans', sans-serif;
   color:  #151516;
 }
 
 a{
-    font-family: "National Park", sans-serif;
+    font-family: 'Work Sans', sans-serif;
     color:  #4f4f52;
     font-weight: 200;
 }

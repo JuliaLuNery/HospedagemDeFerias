@@ -27,5 +27,10 @@ Route::get('/home', function () {
     return view('site.index');
 });
 
+Route::get('/login', function () {
+    return view('login.index');
+});
+
+
 
 require __DIR__.'/auth.php';
