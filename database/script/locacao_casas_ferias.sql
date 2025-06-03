@@ -59,8 +59,8 @@ INSERT INTO marca (id, tipo_bem_id, nome, observacao) VALUES
 
 INSERT INTO bens_locaveis (
     marca_id, modelo, registo_unico_publico, numero_quartos, numero_hospedes, numero_casas_banho, numero_camas, ano, manutencao, preco_diario, observacao
-) VALUES 
-(1, 'Brisa Marítima', '10001/22', 3, 6, 2, 3, 2020, FALSE, 75.00, ''),
+) VALUES
+(1, 'Brisa Marítima', '10001/22', 3, 6, 2, 3, 2020, FALSE, 75.00, 'Imagens/'),
 (1, 'Paraíso Solar', '10002/23', 4, 8, 2, 4, 2021, FALSE, 85.00, ''),
 (2, 'Encanto Azul', '10003/21', 5, 10, 3, 5, 2019, FALSE, 160.00, ''),
 (2, 'Mirante Celestial', '10004/24', 3, 6, 2, 3, 2024, FALSE, 155.00, ''),
@@ -95,7 +95,7 @@ INSERT INTO localizacoes (bem_locavel_id, cidade, filial, posicao) VALUES
 (15, 'Albufeira', 'Praia da Oura', 'Casa 5'),
 (16, 'Setúbal', 'Parque Natural da Arrábida', 'Casa Miradouro 3');
 
-INSERT INTO caracteristicas (nome) VALUES 
+INSERT INTO caracteristicas (nome) VALUES
 ('TV satélite'),
 ('Aquecimento'),
 ('Roupas de cama'),

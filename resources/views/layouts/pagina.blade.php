@@ -147,13 +147,27 @@
   <div class="grid grid-cols-3 gap-4 items-center">
 
     <!-- Data de Início -->
+        {{-- <div>
+                    <label for="data_inicio" class="block text-sm font-semibold text-gray-700 mb-1">
+                        📅 Data de Chegada
+                    </label>
+                    <input type="date" id="data_inicio" name="data_inicio" value="{{ request('data_inicio') }}"
+                        min="{{ date('Y-m-d') }}"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-dark focus:border-purple-dark shadow-sm"
+                        required>
+                </div> --}}
+
     <div class="relative h-10 min-w-[200px]">
       <input
-        id="date-picker-start"
+        {{-- id="date-picker-start" --}}
+        type="date" id="data_inicio" name="data_inicio" value="{{request ('data_inicio')}}"
+        {{-- min="{{date(Y-m-d)}}" --}}
         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200"
         placeholder=" "
-      />
-      <label for="date-picker-start"
+        required>
+
+
+      <label for="data_inicio"
         class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2.5 pl-3">
         Início da Viagem
       </label>
@@ -162,15 +176,29 @@
     <!-- Data de Fim -->
     <div class="relative h-10 min-w-[200px]">
       <input
-        id="date-picker-end"
+        type="date" id="data_fim" name="data_fim" value="{{request('data_fim')}}"
         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200"
         placeholder=" "
-      />
-      <label for="date-picker-end"
+        required>
+
+      <label for="data_fim"
+      {{-- <label for="date-picker-end" --}}
         class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2.5 pl-3">
         Término da Viagem
       </label>
     </div>
+
+    <script>
+        const dI = document.getElementById('data_inicio');
+        const dF = document.getElementById('data_fim');
+
+        // Atualiza o mínimo de data_fim automaticamente
+        dI.addEventListener('change', () => {
+            const dataSelecionada = new Date(dI.value);
+            dataSelecionada.setDate(dataSelecionada.getDate() + 1)
+        });
+
+    </script>
 
        <!-- Hóspedes -->
     <div class="min-w-[200px]">
@@ -180,11 +208,19 @@
           Quantidade de Hóspedes
         </label>
         <input
-          id="amountInput"
+          id="hospedes"
           type="number"
           value="0"
           class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 pr-20 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200"
           placeholder=" "
+
+          {{-- @for ($i = 1; $i <= 10; $i++)
+
+                            <option value="{{ $i }}" {{ request('hospedes') == $i ? 'selected' : '' }}>
+                                {{ $i }} {{ $i == 1 ? 'hóspede' : 'hóspedes' }}
+                            </option>
+                        @endfor --}}
+
         />
         <button id="decreaseButton"
           class="absolute right-9 top-1.5 rounded bg-slate-800 p-1.5 text-white hover:bg-slate-700"

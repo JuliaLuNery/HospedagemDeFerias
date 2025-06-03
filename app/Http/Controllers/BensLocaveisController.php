@@ -3,10 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\BensLocaveis;
+use App\Repository\BensLocaveisRepository;
 use Illuminate\Http\Request;
 
 class BensLocaveisController extends Controller
 {
+
+  protected $bensLocaveis;
+
+
+    public function __construct()
+    {
+        $this->bensLocaveis = new BensLocaveisRepository();
+    }
+
+
+
+
     /**
      * Display a listing of the resource.
      */
