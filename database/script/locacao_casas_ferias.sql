@@ -60,22 +60,22 @@ INSERT INTO marca (id, tipo_bem_id, nome, observacao) VALUES
 INSERT INTO bens_locaveis (
     marca_id, modelo, registo_unico_publico, numero_quartos, numero_hospedes, numero_casas_banho, numero_camas, ano, manutencao, preco_diario, observacao
 ) VALUES
-(1, 'Brisa Marítima', '10001/22', 3, 6, 2, 3, 2020, FALSE, 75.00, 'Imagens/'),
-(1, 'Paraíso Solar', '10002/23', 4, 8, 2, 4, 2021, FALSE, 85.00, ''),
-(2, 'Encanto Azul', '10003/21', 5, 10, 3, 5, 2019, FALSE, 160.00, ''),
-(2, 'Mirante Celestial', '10004/24', 3, 6, 2, 3, 2024, FALSE, 155.00, ''),
-(3, 'Recanto Natural', '10005/20', 4, 8, 2, 4, 2020, FALSE, 210.00, ''),
-(3, 'Beira Litorânea', '10006/23', 5, 10, 3, 5, 2021, FALSE, 220.00, ''),
-(1, 'Brisa Costeira', '10007/22', 2, 4, 1, 2, 2018, FALSE, 70.00, ''),
-(2, 'Serenidade Verde', '10008/21', 3, 6, 2, 3, 2020, FALSE, 145.00, ''),
-(3, 'Retiro Silvestre', '10009/22', 4, 8, 2, 4, 2019, FALSE, 205.00, ''),
-(1, 'Refúgio Revigorante', '10010/23', 2, 4, 1, 2, 2022, FALSE, 90.00, ''),
-(1, 'Recanto Silvestre', '10011/20', 3, 6, 2, 3, 2020, FALSE, 95.00, ''),
-(2, 'Brisa da Montanha', '10012/24', 4, 8, 2, 4, 2023, FALSE, 165.00, ''),
-(2, 'Encanto Natural', '10013/21', 3, 6, 2, 3, 2021, FALSE, 170.00, ''),
-(3, 'Sol e Ondas', '10014/22', 5, 10, 3, 5, 2019, FALSE, 215.00, ''),
-(3, 'Pôr do Sol Dourado', '10015/23', 4, 8, 2, 4, 2022, FALSE, 195.00, ''),
-(1, 'Refúgio Sereno', '10016/20', 2, 4, 1, 2, 2020, FALSE, 78.00, '');
+(1, 'Brisa Marítima', '10001/22', 3, 6, 2, 3, 2020, FALSE, 75.00, 'Imagens/hospedagem/casa1.jpg'),
+(1, 'Paraíso Solar', '10002/23', 4, 8, 2, 4, 2021, FALSE, 85.00, 'Imagens/hospedagem/casa2.jpg'),
+(2, 'Encanto Azul', '10003/21', 5, 10, 3, 5, 2019, FALSE, 160.00, 'Imagens/hospedagem/casa3.jpg'),
+(2, 'Mirante Celestial', '10004/24', 3, 6, 2, 3, 2024, FALSE, 155.00, 'Imagens/hospedagem/casa4.jpg'),
+(3, 'Recanto Natural', '10005/20', 4, 8, 2, 4, 2020, FALSE, 210.00, 'Imagens/hospedagem/casa5.jpg'),
+(3, 'Beira Litorânea', '10006/23', 5, 10, 3, 5, 2021, FALSE, 220.00, 'Imagens/hospedagem/casa6.jpg'),
+(1, 'Brisa Costeira', '10007/22', 2, 4, 1, 2, 2018, FALSE, 70.00, 'Imagens/hospedagem/casa7.jpg'),
+(2, 'Serenidade Verde', '10008/21', 3, 6, 2, 3, 2020, FALSE, 145.00, 'Imagens/hospedagem/casa8.jpg'),
+(3, 'Retiro Silvestre', '10009/22', 4, 8, 2, 4, 2019, FALSE, 205.00, 'Imagens/hospedagem/casa9.jpg'),
+(1, 'Refúgio Revigorante', '10010/23', 2, 4, 1, 2, 2022, FALSE, 90.00, 'Imagens/hospedagem/casa10.jpg'),
+(1, 'Recanto Silvestre', '10011/20', 3, 6, 2, 3, 2020, FALSE, 95.00, 'Imagens/hospedagem/casa11.jpg'),
+(2, 'Brisa da Montanha', '10012/24', 4, 8, 2, 4, 2023, FALSE, 165.00, 'Imagens/hospedagem/casa12.jpg'),
+(2, 'Encanto Natural', '10013/21', 3, 6, 2, 3, 2021, FALSE, 170.00, 'Imagens/hospedagem/casa13.jpg'),
+(3, 'Sol e Ondas', '10014/22', 5, 10, 3, 5, 2019, FALSE, 215.00, 'Imagens/hospedagem/casa14.jpg'),
+(3, 'Pôr do Sol Dourado', '10015/23', 4, 8, 2, 4, 2022, FALSE, 195.00, 'Imagens/hospedagem/casa15.jpg'),
+(1, 'Refúgio Sereno', '10016/20', 2, 4, 1, 2, 2020, FALSE, 78.00, 'Imagens/hospedagem/casa16.jpg');
 
 INSERT INTO localizacoes (bem_locavel_id, cidade, filial, posicao) VALUES
 (1, 'Albufeira', 'Praia da Oura', 'Casa 1'),
