@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BensLocaveisController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -22,10 +23,11 @@ Route::post('/enviar-mail',[MailController::class, 'sendReservationEmail'] )
 ->middleware('auth')
 ->name('send.email');
 
-
-Route::get('/home', function () {
+/*Route::get('/home', function () {
     return view('site.index');
-});
+});*/
+
+Route::get('/home', [BensLocaveisController::class, 'getModelo'])->name('modelo_bem');
 
 Route::get('/login', function () {
     return view('login.index');

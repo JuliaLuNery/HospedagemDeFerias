@@ -18,7 +18,16 @@ class BensLocaveisController extends Controller
     }
 
 
+    /**
+     * Display the specified resource.
+     */
+    public function getModelo()
+    {
+        $bem_locavel = BensLocaveis::get();
 
+        return view('site.index', compact(('bem_locavel')));
+
+    }
 
     /**
      * Display a listing of the resource.
