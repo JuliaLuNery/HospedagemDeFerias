@@ -27,6 +27,8 @@ class BensLocaveis extends Model
         'observacao'
     ];
 
+
+    //Verificação e conversão
     // Cast para conversão de tipos
     protected $casts = [
         'manutencao' => 'boolean',

@@ -21,11 +21,12 @@ class BensLocaveisController extends Controller
     /**
      * Display the specified resource.
      */
-    public function getModelo()
+    public function getadquirirInformacao()
     {
-        $bem_locavel = BensLocaveis::get();
-
+        $bem_locavel = BensLocaveis::all();
+        //dd($bem_locavel);
         return view('site.index', compact(('bem_locavel')));
+        // return view('site.index',["bens_locaveisview" => $bem_locavel]);
 
     }
 
@@ -34,7 +35,10 @@ class BensLocaveisController extends Controller
      */
     public function index()
     {
-        //
+
+
+
+
     }
 
     /**

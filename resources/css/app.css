@@ -12,18 +12,18 @@
 
 
 .oxanium {
-  font-family: "Oxanium", sans-serif;
-  font-optical-sizing: auto;
-  /* font-weight: <weight>; */
-  font-style: normal;
+    font-family: "Oxanium", sans-serif;
+    font-optical-sizing: auto;
+    /* font-weight: <weight>; */
+    font-style: normal;
 }
 
 
 .work-sans {
-  font-family: "Work Sans", sans-serif;
-  font-optical-sizing: auto;
-  /* font-weight: <weight>; */
-  font-style: normal;
+    font-family: "Work Sans", sans-serif;
+    font-optical-sizing: auto;
+    /* font-weight: <weight>; */
+    font-style: normal;
 }
 
 
@@ -39,29 +39,35 @@ Branco: #ededf2
 }
  */
 
- h1{
-  font-family: 'Oxanium', sans-serif;
- }
+h1 {
+    font-family: 'Oxanium', sans-serif;
+}
 
 .titulo {
-     font-family: 'Oxanium', sans-serif;
-     font-size: 70px;
-     font-weight: 600;
-     text-align: center;
-     color: #1c1c6b;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    color: #1c1c6b;
 }
 
-label{
+body {
+    font-family: 'Work Sans', sans-serif;
+    color: #151516;
+}
+
+label {
     font-family: 'Work Sans', sans-serif;
 }
 
-input, button{
-  font-family: 'Work Sans', sans-serif;
-  color:  #151516;
+input,
+button {
+    font-family: 'Work Sans', sans-serif;
+    color: #151516;
 }
 
-a{
+a {
     font-family: 'Work Sans', sans-serif;
-    color:  #4f4f52;
+    color: #4f4f52;
     font-weight: 400;
 }

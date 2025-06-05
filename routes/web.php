@@ -27,7 +27,8 @@ Route::post('/enviar-mail',[MailController::class, 'sendReservationEmail'] )
     return view('site.index');
 });*/
 
-Route::get('/home', [BensLocaveisController::class, 'getModelo'])->name('modelo_bem');
+Route::get('/home', [BensLocaveisController::class, 'getadquirirInformacao'])->name('site');
+// Route::get('/home', [BensLocaveisController::class, 'getadquirirInformacao'])->name('modelo_bem');
 
 Route::get('/login', function () {
     return view('login.index');
