@@ -18,7 +18,7 @@ class Localizacao extends Model
     ];
 
     public function pesquisar(){
-        return $this->belongsTo(BensLocaveis::class && Reservas::class);
+        return $this->belongsTo(BensLocaveis::class, 'bem_locavel_id');
 
     }
 

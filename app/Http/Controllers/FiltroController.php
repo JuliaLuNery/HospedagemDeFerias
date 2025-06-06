@@ -10,33 +10,43 @@ class FiltroController extends Controller
 
 public function pesquisa(Request $request) {
 
-    $data_inicio = $request->input('data_inicio');
-    $data_fim = $request->input('data_fim');
-    $hospedes = $request->input('hospedes');
-    $local = $request->input('local');
-
-        //Barra de Pesquisa
+        $data_inicio = $request->input('data_inicio');
+        $data_fim = $request->input('data_fim');
+        $hospedes = $request->input('hospedes');
         $procurar = $request->input('search');
-        $filtro = Localizacao::with('pesquisar')
-                     ->when($procurar, function($query) use ($procurar) {
-                         $query->where('id', 'like', "%{$procurar}%")
-                         ->orWhere('preco_diario', 'like', "%{$procurar}%")
-                         ->orWhere('numero_hospedes', 'like', "%{$procurar}%")
-                         //Para outra tabela: orWhereHas
-                               ->orWhereHas('pesquisar', function($query) use ($procurar) {
-                                   $query->where('data_inicio', 'like', "%{$procurar}%");
-                                   $query->orWhere('data_fim', 'like', "%{$procurar}%");
-                               });
-                     })
-                    //  ->paginate(10);
 
+        $query = Localizacao::with(['bemLocavel.reservas']);
 
-        // $fatura=Fatura::with('cliente')-> paginate(30);
-        return view ('site.index',compact('bem_locavel'));
+        // Filtro por texto (preço ou nº hóspedes) nos bens
+        if ($procurar) {
+            $query->whereHas('bemLocavel', function ($pes) use ($procurar) {
+                $pes->where('preco_diario', 'like', "%{$procurar}%")
+                  ->orWhere('numero_hospedes', 'like', "%{$procurar}%");
+            });
+        }
+
+        // Filtro por nº de hóspedes
+        if ($hospedes) {
+            $query->whereHas('bemLocavel', function ($pes) use ($hospedes) {
+                $pes->where('numero_hospedes', '>=', $hospedes);
+            });
+        }
+
+        // Filtro por datas de reserva disponíveis
+        if ($data_inicio && $data_fim) {
+            $query->whereHas('bemLocavel.reservas', function ($pes) use ($data_inicio, $data_fim) {
+                $pes->where(function ($reserva) use ($data_inicio, $data_fim) {
+                    $reserva->where('data_inicio', '>', $data_fim)
+                            ->orWhere('data_fim', '<', $data_inicio);
+                });
+            });
+        }
+
+        $bem_locavel = $query->get();
+
+        return view('site.index', compact('bem_locavel'));
+    }
 
 }
 
 
-
-
-}
