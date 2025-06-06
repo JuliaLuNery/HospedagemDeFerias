@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BensLocaveis;
 use App\Models\Localizacao;
 use Illuminate\Http\Request;
 
@@ -13,40 +14,39 @@ public function pesquisa(Request $request) {
         $data_inicio = $request->input('data_inicio');
         $data_fim = $request->input('data_fim');
         $hospedes = $request->input('hospedes');
-        $procurar = $request->input('search');
+        $local = $request->input('local');
 
-        $query = Localizacao::with(['bemLocavel.reservas']);
-
-        // Filtro por texto (preço ou nº hóspedes) nos bens
-        if ($procurar) {
-            $query->whereHas('bemLocavel', function ($pes) use ($procurar) {
-                $pes->where('preco_diario', 'like', "%{$procurar}%")
-                  ->orWhere('numero_hospedes', 'like', "%{$procurar}%");
-            });
-        }
-
-        // Filtro por nº de hóspedes
+        $query = Localizacao::with('bemLocavel')
+    ->whereHas('bemLocavel', function ($q) use ($hospedes) {
         if ($hospedes) {
-            $query->whereHas('bemLocavel', function ($pes) use ($hospedes) {
-                $pes->where('numero_hospedes', '>=', $hospedes);
-            });
+            $q->where('numero_hospedes', '>=', $hospedes);
         }
+    });
 
-        // Filtro por datas de reserva disponíveis
-        if ($data_inicio && $data_fim) {
-            $query->whereHas('bemLocavel.reservas', function ($pes) use ($data_inicio, $data_fim) {
-                $pes->where(function ($reserva) use ($data_inicio, $data_fim) {
-                    $reserva->where('data_inicio', '>', $data_fim)
-                            ->orWhere('data_fim', '<', $data_inicio);
-                });
-            });
-        }
+// Filtrar por local (cidade/filial, se necessário)
+if ($local) {
+    $query->where(function ($q) use ($local) {
+        $q->where('cidade', 'like', "%{$local}%")
+          ->orWhere('filial', 'like', "%{$local}%");
+    });
+}
 
-        $bem_locavel = $query->get();
+// Eliminar apartamentos com reservas conflitantes
+if ($data_inicio && $data_fim) {
+    $query->whereDoesntHave('bemLocavel.reservas', function ($q) use ($data_inicio, $data_fim) {
+        $q->where(function ($reserva) use ($data_inicio, $data_fim) {
+            $reserva->where('data_inicio', '<=', $data_fim)
+                    ->where('data_fim', '>=', $data_inicio);
+        });
+    });
+}
 
-        return view('site.index', compact('bem_locavel'));
+$bem_locavel = BensLocaveis::with('localizacao')->get();
+// $bem_locavel = Localizacao::with('bemLocavel')->get();
+
+
+return view('site.index', compact('bem_locavel'));
     }
 
 }
-
 

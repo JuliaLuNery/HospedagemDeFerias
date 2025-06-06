@@ -42,4 +42,11 @@ class BensLocaveis extends Model
     {
         return $this->hasMany(Reservas::class, 'bem_locavel_id');
     }
+
+    public function localizacao()
+{
+    return $this->hasOne(Localizacao::class, 'bem_locavel_id');
+}
+
+
 }
