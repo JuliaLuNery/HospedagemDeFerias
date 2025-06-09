@@ -1,24 +1,29 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./resources/**/*.blade.php",
-    "./node_modules/@material-tailwind/html/**/*.js",
-    "./node_modules/tw-elements/dist/js/**/*.js",
-  ],
-  theme: {
-    extend: {
-      fontFamily: {
-        // custom: ['"Poppins"', 'sans-serif'],
-      },
-      colors: {
-        // primary: '#1E40AF',
-        // 'primary-dark': '#1E3A8A',
-      },
+    content: [
+        "./resources/**/*.blade.php",
+        "./node_modules/@material-tailwind/html/**/*.js",
+        "./node_modules/tw-elements/dist/js/**/*.js",
+    ],
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['"Work Sans"', 'sans-serif'],
+                titulo: ['"Oxanium"', 'sans-serif'],
+                texto: ['"Work Sans"', 'sans-serif'],
+
+            },
+            colors: {
+               azul: '#1c1c6b',
+               laranja: '#ff501a',
+               preto: '#151516',
+               branco:'#ededf2',
+            },
+        },
     },
-  },
-  plugins: [
-    // require('tw-elements/dist/plugin.cjs'),
-  ],
+    plugins: [
+        // require('tw-elements/dist/plugin.cjs'),
+    ],
 }
 
 

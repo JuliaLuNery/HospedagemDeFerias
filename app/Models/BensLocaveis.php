@@ -14,6 +14,7 @@ class BensLocaveis extends Model
 
     // Campos que podem ser preenchidos
     protected $fillable = [
+        'localizacao_id',
         'marca_id',
         'modelo',
         'registo_unico_publico',
@@ -24,7 +25,8 @@ class BensLocaveis extends Model
         'ano',
         'manutencao',
         'preco_diario',
-        'observacao'
+        'observacao',
+        'avaliacao'
     ];
 
 
@@ -32,7 +34,8 @@ class BensLocaveis extends Model
     // Cast para conversão de tipos
     protected $casts = [
         'manutencao' => 'boolean',
-        'preco_diario' => 'decimal:2'
+        'preco_diario' => 'decimal:2',
+        'avaliacao' => 'decimal:1'
     ];
 
     /**
@@ -43,10 +46,21 @@ class BensLocaveis extends Model
         return $this->hasMany(Reservas::class, 'bem_locavel_id');
     }
 
-    public function localizacao()
-{
-    return $this->hasOne(Localizacao::class, 'bem_locavel_id');
-}
+    // public function localizacao()
+    // {
+    //     return $this->hasOne(Localizacao::class, 'bem_locavel_id');
+    // }
+
+        public function localizacao()
+    {
+        return $this->belongsTo(Localizacao::class);
+    }
+
+    // Relaciona com outra tabela
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);
+    }
 
 
 }

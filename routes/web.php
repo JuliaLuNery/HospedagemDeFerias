@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BensLocaveisController;
+use App\Http\Controllers\FiltroController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,8 @@ Route::get('/home', [BensLocaveisController::class, 'getadquirirInformacao'])->n
 Route::get('/login', function () {
     return view('login.index');
 });
+
+Route::get('/pesquisar', [FiltroController::class, 'pesquisa'])->name('pesquisar');
 
 
 

@@ -47,7 +47,7 @@
 
 </head>
 
-<body>
+<body class="bg-[#f7f4f4]">
     {{-- Conteúdo padrão -> aparecerá em todas as páginas --}}
 
     <header>
@@ -58,10 +58,10 @@
 
         {{-- Navbar --}}
         <nav
-            class="block w-full max-w-screen-lg px-4 py-2 mx-auto text-white bg-white shadow-md rounded-md lg:px-8 lg:py-3 mt-10">
+            class="block w-full max-w-screen-xlg px-4 py-2 mx-auto text-white bg-white shadow-md rounded-md lg:px-8 lg:py-7 mt-0">
             <div class="container flex flex-wrap items-center justify-between mx-auto text-slate-800">
-                <img src="Imagens/Logo_Principal.png" alt="Logo Principal" class="h-12">
-                <a href="#" class="mr-4 block cursor-pointer py-1.5 text-base text-slate-800 font-semibold">
+                <img src="Imagens/Logo_Principal.png" alt="Logo Principal" class="h-16 w-auto">
+                <a href="site/index" class="mr-4 block cursor-pointer py-1.5 text-base text-slate-800 font-semibold">
                 </a>
                 <div class="hidden lg:block">
                     <ul class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -133,130 +133,134 @@
         <br><br>
 
         {{-- Barra de Pesquisa --}}
-        <div class="flex items-center justify-center">
-            <div class="w-full max-w-sm min-w-[1000px]">
-                <div class="relative flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="absolute w-5 h-5 top-2.5 left-2.5 text-slate-600">
-                        <path fill-rule="evenodd"
-                            d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                            clip-rule="evenodd" />
-                    </svg>
 
-                    <input
-                        id="local" name="local"
-                        class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                        placeholder="Localidades" />
+        <form action="{{ route('pesquisar') }}" method="GET">
+            <div class="flex items-center justify-center">
+                <div class="w-full max-w-sm min-w-[1000px]">
+                    <div class="relative flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="absolute w-5 h-5 top-2.5 left-2.5 text-slate-600">
+                            <path fill-rule="evenodd"
+                                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                                clip-rule="evenodd" />
+                        </svg>
 
-                    <button
-                        class="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
-                        type="button">
-                        Pesquisar
-                    </button>
-                </div>
-                <br>
+                        <input type="text" id="local" name="local"
+                            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow bg-white font-texto"
+                            value="{{ request('local') }}"
+                            placeholder="Onde você deseja viajar?" />
 
-
-                {{-- Calendario --}}
-                <div class="flex-row">
-                    <div class="grid grid-cols-3 gap-4 items-center">
-
-                        <!-- Data de Início -->
-                        {{-- <div>
-                    <label for="data_inicio" class="block text-sm font-semibold text-gray-700 mb-1">
-                        📅 Data de Chegada
-                    </label>
-                    <input type="date" id="data_inicio" name="data_inicio" value="{{ request('data_inicio') }}"
-                        min="{{ date('Y-m-d') }}"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-dark focus:border-purple-dark shadow-sm"
-                        required>
-                </div> --}}
-
-                        <div class="relative h-10 min-w-[200px]">
-                            <input {{-- id="date-picker-start" --}} type="date" id="data_inicio" name="data_inicio"
-                                value="{{ request('data_inicio') }}" {{-- min="{{date(Y-m-d)}}" --}}
-                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200"
-                                placeholder=" " required>
+                        <button
+                            class="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+                            type="submit">
+                            Pesquisar
+                        </button>
+                    </div>
+                    <br>
 
 
-                            <label for="data_inicio"
-                                class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2.5 pl-3">
-                                Início da Viagem
-                            </label>
-                        </div>
+                    {{-- Calendario --}}
+                    <div class="flex-row">
+                        <div class="grid grid-cols-3 gap-4 items-center">
 
-                        <!-- Data de Fim -->
-                        <div class="relative h-10 min-w-[200px]">
-                            <input type="date" id="data_fim" name="data_fim" value="{{ request('data_fim') }}"
-                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200"
-                                placeholder=" " required>
+                            <div class="relative h-10 min-w-[200px]">
+                                <input {{-- id="date-picker-start" --}} type="date" id="data_inicio" name="data_inicio"
+                                    value="{{ request('data_inicio') }}" {{-- min="{{date(Y-m-d)}}" --}}
+                                    class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200 bg-white"
+                                    placeholder=" " required>
 
-                            <label for="data_fim" {{-- <label for="date-picker-end" --}}
-                                class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2.5 pl-3">
-                                Término da Viagem
-                            </label>
-                        </div>
 
-                        <script>
-                            const dI = document.getElementById('data_inicio');
-                            const dF = document.getElementById('data_fim');
-
-                            // Atualiza o mínimo de data_fim automaticamente
-                            dI.addEventListener('change', () => {
-                                const dataSelecionada = new Date(dI.value);
-                                dataSelecionada.setDate(dataSelecionada.getDate() + 1)
-                            });
-                        </script>
-
-                        <!-- Hóspedes -->
-                        <div class="min-w-[200px]">
-                            <div class="relative h-10">
-                                <label for="amountInput"
-                                    class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all pl-3">
-                                    Quantidade de Hóspedes
+                                <label for="data_inicio"
+                                    class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2.5 pl-3">
+                                    Início da Viagem
                                 </label>
-                                <input id="hospedes" name="hospedes" type="number" value="0"
-                                    class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 pr-20 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200"
-                                    placeholder=" " {{-- @for ($i = 1; $i <= 10; $i++)
+                            </div>
+
+                            <!-- Data de Fim -->
+                            <div class="relative h-10 min-w-[200px]">
+                                <input type="date" id="data_fim" name="data_fim" value="{{ request('data_fim') }}"
+                                    class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200 bg-white"
+                                    placeholder=" " required>
+
+                                <label for="data_fim" {{-- <label for="date-picker-end" --}}
+                                    class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2.5 pl-3">
+                                    Término da Viagem
+                                </label>
+                            </div>
+
+                            <script>
+                                const dI = document.getElementById('data_inicio');
+                                const dF = document.getElementById('data_fim');
+
+                                // Atualiza o mínimo de data_fim automaticamente
+                                dI.addEventListener('change', () => {
+                                    const dataSelecionada = new Date(dI.value);
+                                    dataSelecionada.setDate(dataSelecionada.getDate() + 1)
+                                });
+                            </script>
+
+                            <!-- Hóspedes -->
+                            <div class="min-w-[200px]">
+                                <div class="relative h-10">
+                                    <label for="amountInput"
+                                        class="absolute left-0 -top-1.5 text-[11px] text-gray-500 transition-all pl-3">
+                                        Quantidade de Hóspedes
+                                    </label>
+                                    <input id="hospedes" name="hospedes" type="number" value="0"
+                                        class="bg-white peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 pr-20 py-2.5 text-sm text-blue-gray-700 outline-none focus:border-2 focus:border-gray-900 placeholder-shown:border-blue-gray-200"
+                                        placeholder=" " {{-- @for ($i = 1; $i <= 10; $i++)
 
                             <option value="{{ $i }}" {{ request('hospedes') == $i ? 'selected' : '' }}>
                                 {{ $i }} {{ $i == 1 ? 'hóspede' : 'hóspedes' }}
                             </option>
                         @endfor --}} />
-                                <button id="decreaseButton"
-                                    class="absolute right-9 top-1.5 rounded bg-slate-800 p-1.5 text-white hover:bg-slate-700"
-                                    type="button">
-                                    -
-                                </button>
-                                <button id="increaseButton"
-                                    class="absolute right-1 top-1.5 rounded bg-slate-800 p-1.5 text-white hover:bg-slate-700"
-                                    type="button">
-                                    +
-                                </button>
+                                    <button id="decreaseButton"
+                                        class="absolute right-9 top-1.5 rounded bg-slate-800 p-1.5 text-white hover:bg-slate-700"
+                                        type="button">
+                                        -
+                                    </button>
+                                    <button id="increaseButton"
+                                        class="absolute right-1 top-1.5 rounded bg-slate-800 p-1.5 text-white hover:bg-slate-700"
+                                        type="button">
+                                        +
+                                    </button>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">Use os botões ou digite o número.</p>
                             </div>
-                            <p class="text-xs text-slate-400 mt-1">Use os botões ou digite o número.</p>
+
                         </div>
-
                     </div>
-                </div>
+        </form>
 
-                <!-- Scripts -->
-                <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-                <script>
-                    flatpickr("#date-picker-start", {});
-                    flatpickr("#date-picker-end", {});
-
-                    const amountInput = document.getElementById('amountInput');
-                    document.getElementById('increaseButton').addEventListener('click', () => {
-                        amountInput.value = parseInt(amountInput.value) + 1;
-                    });
-                    document.getElementById('decreaseButton').addEventListener('click', () => {
-                        amountInput.value = Math.max(0, parseInt(amountInput.value) - 1);
-                    });
-                </script>
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            flatpickr("#data_inicio", {});
+            flatpickr("#data_fim", {});
 
 
-                <br><br>
+            const numeroHospedes = document.getElementById('hospedes');
+            const btnMais = document.getElementById('increaseButton');
+            const btnMenos = document.getElementById('decreaseButton');
+
+            btnMais.addEventListener('click', () => {
+                let valor = parseInt(numeroHospedes.value) || 0;
+                numeroHospedes.value = valor + 1;
+            });
+
+            btnMenos.addEventListener('click', () => {
+                let valor = parseInt(numeroHospedes.value) || 0;
+                if (valor > 0) {
+                    numeroHospedes.value = valor - 1;
+                }
+            });
+        </script>
+
+
+        </script>
+
+
+        <br><br>
 
     </header>
 

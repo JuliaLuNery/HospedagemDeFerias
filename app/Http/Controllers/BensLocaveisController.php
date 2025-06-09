@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class BensLocaveisController extends Controller
 {
 
-  protected $bensLocaveis;
+    protected $bensLocaveis;
 
 
     public function __construct()
@@ -27,19 +27,20 @@ class BensLocaveisController extends Controller
         //dd($bem_locavel);
         return view('site.index', compact(('bem_locavel')));
         // return view('site.index',["bens_locaveisview" => $bem_locavel]);
-
     }
+
+    public function marca()
+    {
+        $bem_locavel = BensLocaveis::with('marca')->get();
+        return view('site.index', compact('bem_locavel'));
+    }
+
+
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-
-
-
-
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.

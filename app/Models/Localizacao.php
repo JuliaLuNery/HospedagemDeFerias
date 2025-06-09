@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Localizacao extends Model
 {
-       use HasFactory;
+    //Para não haver problemas com singular/plural - aqui identifiquei com singular porém, para o programa consultar no BD é necessário ter esta relação no plural já que o nome está plural
+    protected $table = 'localizacoes';
+
+    use HasFactory;
 
     protected $fillable = [
         'id',
@@ -20,6 +23,11 @@ class Localizacao extends Model
     public function pesquisar(){
         return $this->belongsTo(BensLocaveis::class, 'bem_locavel_id');
 
+    }
+
+        public function bemLocavel()
+    {
+        return $this->hasMany(BensLocaveis::class);
     }
 
 

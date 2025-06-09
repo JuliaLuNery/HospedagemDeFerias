@@ -10,6 +10,8 @@ class Reservas extends Model
     /** @use HasFactory<\Database\Factories\ReservasFactory> */
     use HasFactory;
 
+    protected $table = 'reservas';
+
     protected $fillable = [
         'id',
         'user_id',
