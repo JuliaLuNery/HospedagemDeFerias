@@ -1,4 +1,4 @@
-@extends('layouts.pagina')
+@extends('layouts.paginaInterna')
 
 @section('content')
 

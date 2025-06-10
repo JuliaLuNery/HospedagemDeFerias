@@ -7,6 +7,10 @@
            href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
            rel="stylesheet">
 
+       {{-- Alpine.js --}}
+       <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+
    </head>
 
    @extends('layouts.pagina')
@@ -17,62 +21,164 @@
 
        {{-- Cards --}}
 
-       <div class="grid grid-cols-3 gap-4 sm:grid-cols-2 md:grid-cols-3 mx-8">
+       <div x-data="{ modalAtivo: false, dados: {} }">
 
-           @foreach ($bem_locavel as $dado)
-           <div
-                   class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-100 font-['Work Sans'] text-[#151516]">
-                   <div class="relative h-62 m-2.5 overflow-hidden text-white rounded-md">
-                       <img src="{{ /*asset($dado>observacao)*/ $dado->observacao }}" alt="Hospedagem 1"
-                           class="w-full h-64 object-cover" />
-                   </div>
-                   <div class="p-4">
-                       <div class="items-center justify-between mb-1">
-                           <h6 class="text-slate-800 text-xl font-semibold text-center mb-3">
-                               {{ $dado->modelo }}
-                           </h6>
+           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mx-8 my-10">
 
-                           {{-- Avaliação --}}
-                           <div class="flex items-center gap-0.5 mb-1">
-                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                   class="w-5 h-5 text-yellow-600">
-                                   <path fill-rule="evenodd"
-                                       d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                                       clip-rule="evenodd"></path>
-                               </svg>
-                               <span class="text-slate-600 ml-1.5">{{ $dado->avaliacao }}</span>
+               @foreach ($bem_locavel as $dado)
+                   <div
+                       class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden font-['Work Sans'] text-[#151516] ">
+                       <img src="{{ $dado->observacao }}" alt="Imagem" class="w-full h-64 object-cover">
+
+                       <div class="p-4 mx-2">
+                           <div class="flex justify-between items-center mb-2">
+                               <h2 class="text-xl font-semibold text-center mb-2 font-texto">{{ $dado->modelo }}</h2>
+
+                               {{-- Avaliação --}}
+                               <div class="flex items-center gap-1 mb-2 font-semibold">
+                                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                       class="w-5 h-5 text-yellow-500">
+                                       <path
+                                           d="M12 .587l3.668 7.568L24 9.748l-6 5.796 1.412 8.242L12 18.897l-7.412 4.889L6 15.544 0 9.748l8.332-1.593z" />
+                                   </svg>
+                                   <span>{{ $dado->avaliacao }}</span>
+                               </div>
                            </div>
 
-                           <p class="text-slate-600 leading-normal mb-2 font-semibold">
+                           <p class="text-slate-600 mb-1 font-semibold">
                                Local: {{ $dado->localizacao->cidade }} | {{ $dado->localizacao->filial }}
                            </p>
 
                            {{-- Descrição --}}
-                           <p class="text-slate-600 leading-normal mb-2 mb-4 font-normal">
+                           <p class="text-slate-600 text-sm mb-3 font-medium">
                                {{ $dado->marca->observacao }}
                            </p>
 
-                           <div class="flex items-center gap-0.5 mb-3 justify-end mr-5">
+                           {{-- Preço --}}
+                           <div class="flex items-center gap-0.5 mb-3 justify-end mr-4">
                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                    stroke="currentColor" class="w-5 h-5 text-black">
                                    <path stroke-linecap="round" stroke-linejoin="round"
                                        d="M14.25 7.756a4.5 4.5 0 1 0 0 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                </svg>
-                               <span class="text-slate-600 text-lg ml-1.5 font-bold">{{ $dado->preco_diario }}</span>
+                               <span
+                                   class="text-xl ml-1.5 font-bold font-['Work Sans'] text-[#151516]">{{ $dado->preco_diario }}</span>
                            </div>
 
 
-                           <div class="px-4 pb-4 pt-0 mt-2">
-                               <button
-                                   class="w-full rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                   type="submit">
-                                   Reserve
+                           <!-- BOTÃO QUE ATIVA O MODAL COM DADOS -->
+                           <button
+                               @click="modalAtivo = true; dados = {
+                            imagem: '{{ $dado->observacao }}',
+                            modelo: '{{ $dado->modelo }}',
+                            cidade: '{{ $dado->localizacao->cidade }}',
+                            filial: '{{ $dado->localizacao->filial }}',
+                            quartos: '{{ $dado->numero_quartos }}',
+                            hospedes: '{{ $dado->numero_hospedes }}',
+                            banheiros: '{{ $dado->numero_casas_banho }}',
+                            camas: '{{ $dado->numero_camas }}'
+                        }"
+                               class="w-full mt-2 rounded-md bg-slate-800 py-2 px-4 text-sm text-white font-normal hover:bg-slate-700 transition-all">
+                               Reserve
+                           </button>
+                       </div>
+                   </div>
+               @endforeach
+           </div>
+
+           <!-- MODAL -->
+           <div x-show="modalAtivo" x-transition @click.away="modalAtivo = false"
+               class="fixed inset-0 z-50 flex items-center justify-center bg-[#ededf2] bg-opacity-50 backdrop-blur-sm font-['Work Sans'] text-[#151516]">
+               <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-lg font-['Work Sans'] text-[#151516] ">
+                   <img :src="dados.imagem" alt="Imagem" class="w-full h-60 object-cover rounded mb-4">
+                   <h2 class="text-xl font-semibold text-center mb-3" x-text="dados.modelo"></h2>
+
+
+                   <div class="text-sm space-y-1">
+                       <!-- CIDADE -->
+                       <div class="flex items-center gap-2">
+                           <span><strong>Cidade:</strong> <span x-text="dados.cidade"></span></span>
+                       </div>
+
+                       <!-- FILIAL -->
+                       <div class="flex items-center gap-2">
+                           <span><strong>Filial:</strong> <span x-text="dados.filial"></span></span>
+                       </div>
+
+                       <div class="flex justify-between items-center mb-2">
+                           <!-- QUARTOS -->
+                           <div class="flex items-center gap-2">
+                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 576 512"
+                                   xmlns="http://www.w3.org/2000/svg">
+
+                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                   <path
+                                       d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z">
+                                   </path>
+
+                               </svg>
+                               <span><strong>Quartos:</strong> <span x-text="dados.quartos"></span></span>
+                           </div>
+
+                           <!-- HÓSPEDES -->
+                           <div class="flex items-center gap-2">
+                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 576 512"
+                                   xmlns="http://www.w3.org/2000/svg">
+
+                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                   <path
+                                       d="M543.8 287.6c17 0 32-14 32-32.1c1-9-3-17-11-24L512 185V64c0-17.7-14.3-32-32-32H448c-17.7 0-32 14.3-32 32v36.7L309.5 7c-6-5-14-7-21-7s-15 1-22 8L10 231.5c-7 7-10 15-10 24c0 18 14 32.1 32 32.1h32V448c0 35.3 28.7 64 64 64H448.5c35.5 0 64.2-28.8 64-64.3l-.7-160.2h32zM288 160a64 64 0 1 1 0 128 64 64 0 1 1 0-128zM176 400c0-44.2 35.8-80 80-80h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H192c-8.8 0-16-7.2-16-16z">
+                                   </path>
+
+                               </svg>
+                               <span><strong>Hóspedes:</strong> <span x-text="dados.hospedes"></span></span>
+                           </div>
+
+                           <!-- BANHEIROS -->
+                           <div class="flex items-center gap-2">
+                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 512 512"
+                                   xmlns="http://www.w3.org/2000/svg">
+
+                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                   <path
+                                       d="M96 77.3c0-7.3 5.9-13.3 13.3-13.3c3.5 0 6.9 1.4 9.4 3.9l14.9 14.9C130 91.8 128 101.7 128 112c0 19.9 7.2 38 19.2 52c-5.3 9.2-4 21.1 3.8 29c9.4 9.4 24.6 9.4 33.9 0L289 89c9.4-9.4 9.4-24.6 0-33.9c-7.9-7.9-19.8-9.1-29-3.8C246 39.2 227.9 32 208 32c-10.3 0-20.2 2-29.2 5.5L163.9 22.6C149.4 8.1 129.7 0 109.3 0C66.6 0 32 34.6 32 77.3V256c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H96V77.3zM32 352v16c0 28.4 12.4 54 32 71.6V480c0 17.7 14.3 32 32 32s32-14.3 32-32V464H384v16c0 17.7 14.3 32 32 32s32-14.3 32-32V439.6c19.6-17.6 32-43.1 32-71.6V352H32z">
+                                   </path>
+
+                               </svg>
+                               <span><strong>Banheiros:</strong> <span x-text="dados.banheiros"></span></span>
+                           </div>
+
+                           <!-- CAMAS -->
+                           <div class="flex items-center gap-2">
+                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 640 512"
+                                   xmlns="http://www.w3.org/2000/svg">
+
+                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                   <path
+                                       d="M32 32c17.7 0 32 14.3 32 32V320H288V160c0-17.7 14.3-32 32-32H544c53 0 96 43 96 96V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V416H352 320 64v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V64C0 46.3 14.3 32 32 32zm144 96a80 80 0 1 1 0 160 80 80 0 1 1 0-160z">
+                                   </path>
+
+                               </svg>
+                               <span><strong>Camas:</strong> <span x-text="dados.camas"></span></span>
+                           </div>
+                       </div>
+
+                       <br>
+                       <div class="flex justify-center gap-3 mt-8">
+                           <button @click="modalAtivo = false"
+                               class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">
+                               Cancelar
+                           </button>
+                           <form :action="'/reserva/' + dados.id" method="GET">
+                               <button type="submit" name="btnReservar" id="btnReservar"
+                                   class="bg-[#1c1c6b] hover:bg-[#161656] text-white px-4 py-2 rounded">
+                                   Reservar
                                </button>
-                           </div>
+                           </form>
                        </div>
                    </div>
                </div>
-           @endforeach
+           </div>
 
        </div>
 
