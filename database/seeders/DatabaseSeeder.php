@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Julia Nery',
             'level' => 'admin',
             'email' => 'admin@gmail.com',
+            'password'=> 'password',
+
+
+            $this->call(AtualizarLocalizacoesBensSeeder::class),
 
         ]);
     }

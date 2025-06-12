@@ -14,7 +14,7 @@ class BensLocaveis extends Model
 
     // Campos que podem ser preenchidos
     protected $fillable = [
-        'localizacao_id',
+        'localizacoes_id',
         'marca_id',
         'modelo',
         'registo_unico_publico',

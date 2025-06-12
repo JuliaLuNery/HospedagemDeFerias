@@ -12,16 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bens_locaveis', function (Blueprint $table) {
-
-            // $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            // $table->foreignId('localizacao_id')->constrained('localizacoes')->after('id');
-            $table->unsignedBigInteger('localizacao_id')->after('id');
-
-            $table->foreign('localizacao_id')->references('id')->on('localizacoes')->onDelete('cascade');
-
-            $table->timestamps();
+            if (!Schema::hasColumn('bens_locaveis', 'localizacao_id')) {
+                $table->integer('localizacoes_id')->after('id');
+                $table->foreignId('localizacoes_id')->references('id')->on('localizacoes')->onDelete('cascade');
+            }
         });
-
     }
 
     /**
@@ -30,9 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('bens_locaveis', function (Blueprint $table) {
-
-            $table->dropForeign(['localizacao_id']);
-            $table->dropColumn('localizacao_id');
+            //
         });
     }
 };

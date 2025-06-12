@@ -10,91 +10,91 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // DB::unprepared(file_get_contents(database_path('script/locacao_casas_ferias.sql')));
+        DB::unprepared(file_get_contents(database_path('script/locacao_casas_ferias.sql')));
 
         //Ou
 
-        $statements = $this->loadParseSQLStatements(
-            database_path('script/locacao_casas_ferias.sql')
-        );
+    //     $statements = $this->loadParseSQLStatements(
+    //         database_path('script/locacao_casas_ferias.sql')
+    //     );
 
-        [$createStatements, $otherStatements] = $this->separateStatements($statements);
+    //     [$createStatements, $otherStatements] = $this->separateStatements($statements);
 
-        $this->executeStatements($createStatements, 'CREATE TABLE');
-        $this->executeStatements($otherStatements, 'OUTROS');
-    }
+    //     $this->executeStatements($createStatements, 'CREATE TABLE');
+    //     $this->executeStatements($otherStatements, 'OUTROS');
+    // }
 
 
-    private function loadParseSQLStatements(string $path): array
-    {
-        if (!file_exists($path)) {
-            throw new \Exception('O arquivo SQL não foi encontrado em: ' . $path);
-        }
+    // private function loadParseSQLStatements(string $path): array
+    // {
+    //     if (!file_exists($path)) {
+    //         throw new \Exception('O arquivo SQL não foi encontrado em: ' . $path);
+    //     }
 
-        $sql = file_get_contents($path);
-        return $this->splitSQLStatements($sql);
-    }
+    //     $sql = file_get_contents($path);
+    //     return $this->splitSQLStatements($sql);
+    // }
 
-    private function separateStatements(array $statements): array
-    {
-        $create = [];
-        $others = [];
+    // private function separateStatements(array $statements): array
+    // {
+    //     $create = [];
+    //     $others = [];
 
-        foreach ($statements as $statement) {
-            if (preg_match('/\bCREATE\s+TABLE\b/i', $statement)) {
-                $create[] = $statement;
-            } elseif (!preg_match('/\b(DELETE|DROP|TRUNCATE|ALTER|UPDATE)\b/i', $statement)) {
-                $others[] = $statement;
-            }
-        }
+    //     foreach ($statements as $statement) {
+    //         if (preg_match('/\bCREATE\s+TABLE\b/i', $statement)) {
+    //             $create[] = $statement;
+    //         } elseif (!preg_match('/\b(DELETE|DROP|TRUNCATE|UPDATE)\b/i', $statement)) {
+    //             $others[] = $statement;
+    //         }
+    //     }
 
-        return [$create, $others];
-    }
+    //     return [$create, $others];
+    // }
 
-    private function executeStatements(array $statements, string $type): void
-    {
-        logger()->alert("Executando instruções SQL do tipo: {$type}", ['count' => count($statements)]);
+    // private function executeStatements(array $statements, string $type): void
+    // {
+    //     logger()->alert("Executando instruções SQL do tipo: {$type}", ['count' => count($statements)]);
 
-        foreach ($statements as $statement) {
-            if (!empty($statement)) {
-                DB::unprepared($statement . ';');
-            }
-        }
-    }
+    //     foreach ($statements as $statement) {
+    //         if (!empty($statement)) {
+    //             DB::unprepared($statement . ';');
+    //         }
+    //     }
+    // }
 
-    private function splitSQLStatements(string $sql): array
-    {
-        $statements = [];
-        $buffer = '';
-        $inString = false;
-        $stringChar = '';
+    // private function splitSQLStatements(string $sql): array
+    // {
+    //     $statements = [];
+    //     $buffer = '';
+    //     $inString = false;
+    //     $stringChar = '';
 
-        for ($i = 0; $i < strlen($sql); $i++) {
-            $char = $sql[$i];
+    //     for ($i = 0; $i < strlen($sql); $i++) {
+    //         $char = $sql[$i];
 
-            // Detectar início/fim de string
-            if (($char === "'" || $char === '"') && ($i === 0 || $sql[$i - 1] !== '\\')) {
-                if ($inString && $char === $stringChar) {
-                    $inString = false;
-                } elseif (!$inString) {
-                    $inString = true;
-                    $stringChar = $char;
-                }
-            }
+    //         // Detectar início/fim de string
+    //         if (($char === "'" || $char === '"') && ($i === 0 || $sql[$i - 1] !== '\\')) {
+    //             if ($inString && $char === $stringChar) {
+    //                 $inString = false;
+    //             } elseif (!$inString) {
+    //                 $inString = true;
+    //                 $stringChar = $char;
+    //             }
+    //         }
 
-            $buffer .= $char;
+    //         $buffer .= $char;
 
-            if ($char === ';' && !$inString) {
-                $statements[] = trim($buffer);
-                $buffer = '';
-            }
-        }
+    //         if ($char === ';' && !$inString) {
+    //             $statements[] = trim($buffer);
+    //             $buffer = '';
+    //         }
+    //     }
 
-        if (trim($buffer) !== '') {
-            $statements[] = trim($buffer);
-        }
+    //     if (trim($buffer) !== '') {
+    //         $statements[] = trim($buffer);
+    //     }
 
-        return $statements;
+    //     return $statements;
     }
 
 

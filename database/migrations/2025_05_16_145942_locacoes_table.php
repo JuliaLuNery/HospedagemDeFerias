@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('status', ['reservado', 'cancelado'])->default('reservado');
             $table->timestamps();
 
-                $table->foreign('bem_locavel_id')->references('id')->on('bens_locaveis')->onDelete('cascade');
+            $table->foreign('bem_locavel_id')->references('id')->on('bens_locaveis')->onDelete('cascade');
 
         });
     }
