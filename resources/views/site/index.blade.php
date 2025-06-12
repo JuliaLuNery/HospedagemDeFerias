@@ -45,6 +45,8 @@
                                </div>
                            </div>
 
+
+
                            <p class="text-slate-600 mb-1 font-semibold">
                                Local: {{ $dado->localizacao->cidade }} | {{ $dado->localizacao->filial }}
                            </p>

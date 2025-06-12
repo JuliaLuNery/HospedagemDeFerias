@@ -23,7 +23,8 @@ class BensLocaveisController extends Controller
      */
     public function getadquirirInformacao()
     {
-        $bem_locavel = BensLocaveis::all();
+        $bem_locavel =BensLocaveis::with('localizacao')->get();
+        // BensLocaveis::all();
         //dd($bem_locavel);
         return view('site.index', compact(('bem_locavel')));
         // return view('site.index',["bens_locaveisview" => $bem_locavel]);

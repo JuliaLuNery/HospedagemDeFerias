@@ -53,7 +53,7 @@ class BensLocaveis extends Model
 
         public function localizacao()
     {
-        return $this->belongsTo(Localizacao::class);
+        return $this->belongsTo(Localizacao::class, 'localizacoes_id');
     }
 
     // Relaciona com outra tabela
