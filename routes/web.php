@@ -25,10 +25,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/reserva', [ReservasController::class, 'store'])->name('reserva.store');
 });
 
+Route::get('/', function () {
+    return view('site.index');
+})->name('site.index');
 
-Route::post('/enviar-mail',[MailController::class, 'sendReservationEmail'] )
-->middleware('auth')
-->name('send.email');
+
+Route::post('/enviar-mail', [MailController::class, 'sendReservationEmail'])
+    ->middleware('auth')
+    ->name('send.email');
 
 /*Route::get('/home', function () {
     return view('site.index');
@@ -45,4 +49,4 @@ Route::get('/pesquisar', [FiltroController::class, 'pesquisa'])->name('pesquisar
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

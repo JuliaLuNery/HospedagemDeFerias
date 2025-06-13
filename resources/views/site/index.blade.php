@@ -47,9 +47,9 @@
 
 
 
-                           <p class="text-slate-600 mb-1 font-semibold">
+                           {{-- <p class="text-slate-600 mb-1 font-semibold">
                                Local: {{ $dado->localizacao->cidade }} | {{ $dado->localizacao->filial }}
-                           </p>
+                           </p> --}}
 
                            {{-- Descrição --}}
                            <p class="text-slate-600 text-sm mb-3 font-medium">
@@ -73,8 +73,8 @@
                                @click="modalAtivo = true; dados = {
                             imagem: '{{ $dado->observacao }}',
                             modelo: '{{ $dado->modelo }}',
-                            cidade: '{{ $dado->localizacao->cidade }}',
-                            filial: '{{ $dado->localizacao->filial }}',
+                            {{-- cidade: '{{ $dado->localizacao->cidade }}',
+                            filial: '{{ $dado->localizacao->filial }}', --}}
                             quartos: '{{ $dado->numero_quartos }}',
                             hospedes: '{{ $dado->numero_hospedes }}',
                             banheiros: '{{ $dado->numero_casas_banho }}',
