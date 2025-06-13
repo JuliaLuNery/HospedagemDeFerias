@@ -28,13 +28,13 @@
                @foreach ($bem_locavel as $dado)
                    <div
                        class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden font-['Work Sans'] text-[#151516] ">
-                       <img src="{{ $dado->observacao }}" alt="Imagem" class="w-full h-64 object-cover">
+                       <img src="{{ $dado->observacao }}" alt="Imagem" id="imagem" class="w-full h-64 object-cover">
 
                        <div class="p-4 mx-2">
                            <div class="flex justify-between items-center mb-2">
                                <h2 class="text-xl font-semibold text-center mb-2 font-texto">{{ $dado->modelo }}</h2>
 
-                               {{-- Avaliação --}}
+                               {{-- Avaliação --}}  
                                <div class="flex items-center gap-1 mb-2 font-semibold">
                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
                                        class="w-5 h-5 text-yellow-500">
@@ -47,9 +47,9 @@
 
 
 
-                           {{-- <p class="text-slate-600 mb-1 font-semibold">
+                           <p class="text-slate-600 mb-1 font-semibold">
                                Local: {{ $dado->localizacao->cidade }} | {{ $dado->localizacao->filial }}
-                           </p> --}}
+                           </p>
 
                            {{-- Descrição --}}
                            <p class="text-slate-600 text-sm mb-3 font-medium">
@@ -73,8 +73,8 @@
                                @click="modalAtivo = true; dados = {
                             imagem: '{{ $dado->observacao }}',
                             modelo: '{{ $dado->modelo }}',
-                            {{-- cidade: '{{ $dado->localizacao->cidade }}',
-                            filial: '{{ $dado->localizacao->filial }}', --}}
+                            cidade: '{{ $dado->localizacao->cidade }}',
+                            filial: '{{ $dado->localizacao->filial }}',
                             quartos: '{{ $dado->numero_quartos }}',
                             hospedes: '{{ $dado->numero_hospedes }}',
                             banheiros: '{{ $dado->numero_casas_banho }}',
@@ -88,101 +88,155 @@
                @endforeach
            </div>
 
+
            <!-- MODAL -->
-           <div x-show="modalAtivo" x-transition @click.away="modalAtivo = false"
-               class="fixed inset-0 z-50 flex items-center justify-center bg-[#ededf2] bg-opacity-50 backdrop-blur-sm font-['Work Sans'] text-[#151516]">
-               <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-lg font-['Work Sans'] text-[#151516] ">
-                   <img :src="dados.imagem" alt="Imagem" class="w-full h-60 object-cover rounded mb-4">
-                   <h2 class="text-xl font-semibold text-center mb-3" x-text="dados.modelo"></h2>
+           <form method="GET" action="{{ route('reserva.create') }}">
+               @csrf
+
+               <div x-show="modalAtivo" x-transition @click.away="modalAtivo = false"
+                   class="fixed inset-0 z-50 flex items-center justify-center bg-[#ededf2] bg-opacity-50 backdrop-blur-sm font-['Work Sans'] text-[#151516]">
+                   <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-lg font-['Work Sans'] text-[#151516] ">
+                       <img :src="dados.imagem" alt="Imagem" class="w-full h-60 object-cover rounded mb-4">
+                       <input type="hidden" id="modelo" name="modelo" :value="dados.modelo">
+                       <h2 class="text-xl font-semibold text-center mb-3" x-text="dados.modelo"></h2>
+                       <input type="hidden" id="preco_diario" name="preco_diario" :value="dados.preco_diario">
 
 
-                   <div class="text-sm space-y-1">
-                       <!-- CIDADE -->
-                       <div class="flex items-center gap-2">
-                           <span><strong>Cidade:</strong> <span x-text="dados.cidade"></span></span>
-                       </div>
-
-                       <!-- FILIAL -->
-                       <div class="flex items-center gap-2">
-                           <span><strong>Filial:</strong> <span x-text="dados.filial"></span></span>
-                       </div>
-
-                       <div class="flex justify-between items-center mb-2">
-                           <!-- QUARTOS -->
+                       <div class="text-sm space-y-1">
+                           <!-- CIDADE -->
                            <div class="flex items-center gap-2">
-                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 576 512"
-                                   xmlns="http://www.w3.org/2000/svg">
-
-                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                   <path
-                                       d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z">
-                                   </path>
-
-                               </svg>
-                               <span><strong>Quartos:</strong> <span x-text="dados.quartos"></span></span>
+                               <input type="hidden" name="cidade" id="cidade" :value="dados.cidade">
+                               <span><strong>Cidade:</strong> <span x-text="dados.cidade"></span></span>
                            </div>
 
-                           <!-- HÓSPEDES -->
+                           <!-- FILIAL -->
                            <div class="flex items-center gap-2">
-                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 576 512"
-                                   xmlns="http://www.w3.org/2000/svg">
-
-                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                   <path
-                                       d="M543.8 287.6c17 0 32-14 32-32.1c1-9-3-17-11-24L512 185V64c0-17.7-14.3-32-32-32H448c-17.7 0-32 14.3-32 32v36.7L309.5 7c-6-5-14-7-21-7s-15 1-22 8L10 231.5c-7 7-10 15-10 24c0 18 14 32.1 32 32.1h32V448c0 35.3 28.7 64 64 64H448.5c35.5 0 64.2-28.8 64-64.3l-.7-160.2h32zM288 160a64 64 0 1 1 0 128 64 64 0 1 1 0-128zM176 400c0-44.2 35.8-80 80-80h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H192c-8.8 0-16-7.2-16-16z">
-                                   </path>
-
-                               </svg>
-                               <span><strong>Hóspedes:</strong> <span x-text="dados.hospedes"></span></span>
+                               <input type="hidden" name="filial"  id="filial":value="dados.filial">
+                               <span><strong>Filial:</strong> <span x-text="dados.filial"></span></span>
                            </div>
 
-                           <!-- BANHEIROS -->
-                           <div class="flex items-center gap-2">
-                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 512 512"
-                                   xmlns="http://www.w3.org/2000/svg">
+                           <div class="flex justify-between items-center mb-2">
+                               <!-- QUARTOS -->
+                               <div class="flex items-center gap-2">
+                                   <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 576 512"
+                                       xmlns="http://www.w3.org/2000/svg">
 
-                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                   <path
-                                       d="M96 77.3c0-7.3 5.9-13.3 13.3-13.3c3.5 0 6.9 1.4 9.4 3.9l14.9 14.9C130 91.8 128 101.7 128 112c0 19.9 7.2 38 19.2 52c-5.3 9.2-4 21.1 3.8 29c9.4 9.4 24.6 9.4 33.9 0L289 89c9.4-9.4 9.4-24.6 0-33.9c-7.9-7.9-19.8-9.1-29-3.8C246 39.2 227.9 32 208 32c-10.3 0-20.2 2-29.2 5.5L163.9 22.6C149.4 8.1 129.7 0 109.3 0C66.6 0 32 34.6 32 77.3V256c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H96V77.3zM32 352v16c0 28.4 12.4 54 32 71.6V480c0 17.7 14.3 32 32 32s32-14.3 32-32V464H384v16c0 17.7 14.3 32 32 32s32-14.3 32-32V439.6c19.6-17.6 32-43.1 32-71.6V352H32z">
-                                   </path>
+                                       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                       <path
+                                           d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z">
+                                       </path>
 
-                               </svg>
-                               <span><strong>Banheiros:</strong> <span x-text="dados.banheiros"></span></span>
+                                   </svg>
+                                   <input type="hidden" name="quartos" id="quartos" :value="dados.quartos">
+                                   <span><strong>Quartos:</strong> <span x-text="dados.quartos"></span></span>
+                               </div>
+
+                               <!-- HÓSPEDES -->
+                               <div class="flex items-center gap-2">
+                                   <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 576 512"
+                                       xmlns="http://www.w3.org/2000/svg">
+
+                                       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                       <path
+                                           d="M543.8 287.6c17 0 32-14 32-32.1c1-9-3-17-11-24L512 185V64c0-17.7-14.3-32-32-32H448c-17.7 0-32 14.3-32 32v36.7L309.5 7c-6-5-14-7-21-7s-15 1-22 8L10 231.5c-7 7-10 15-10 24c0 18 14 32.1 32 32.1h32V448c0 35.3 28.7 64 64 64H448.5c35.5 0 64.2-28.8 64-64.3l-.7-160.2h32zM288 160a64 64 0 1 1 0 128 64 64 0 1 1 0-128zM176 400c0-44.2 35.8-80 80-80h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H192c-8.8 0-16-7.2-16-16z">
+                                       </path>
+
+                                   </svg>
+                                   <input type="hidden" name="hospedes" id="hospedes" :value="dados.hospedes">
+                                   <span><strong>Hóspedes:</strong> <span x-text="dados.hospedes"></span></span>
+                               </div>
+
+                               <!-- BANHEIROS -->
+                               <div class="flex items-center gap-2">
+                                   <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 512 512"
+                                       xmlns="http://www.w3.org/2000/svg">
+
+                                       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                       <path
+                                           d="M96 77.3c0-7.3 5.9-13.3 13.3-13.3c3.5 0 6.9 1.4 9.4 3.9l14.9 14.9C130 91.8 128 101.7 128 112c0 19.9 7.2 38 19.2 52c-5.3 9.2-4 21.1 3.8 29c9.4 9.4 24.6 9.4 33.9 0L289 89c9.4-9.4 9.4-24.6 0-33.9c-7.9-7.9-19.8-9.1-29-3.8C246 39.2 227.9 32 208 32c-10.3 0-20.2 2-29.2 5.5L163.9 22.6C149.4 8.1 129.7 0 109.3 0C66.6 0 32 34.6 32 77.3V256c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H96V77.3zM32 352v16c0 28.4 12.4 54 32 71.6V480c0 17.7 14.3 32 32 32s32-14.3 32-32V464H384v16c0 17.7 14.3 32 32 32s32-14.3 32-32V439.6c19.6-17.6 32-43.1 32-71.6V352H32z">
+                                       </path>
+
+                                   </svg>
+                                   <input type="hidden" name="banheiros" id="banheiros" :value="dados.banheiros">
+                                   <span><strong>Banheiros:</strong> <span x-text="dados.banheiros"></span></span>
+                               </div>
+
+                               <!-- CAMAS -->
+                               <div class="flex items-center gap-2">
+                                   <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 640 512"
+                                       xmlns="http://www.w3.org/2000/svg">
+
+                                       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                       <path
+                                           d="M32 32c17.7 0 32 14.3 32 32V320H288V160c0-17.7 14.3-32 32-32H544c53 0 96 43 96 96V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V416H352 320 64v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V64C0 46.3 14.3 32 32 32zm144 96a80 80 0 1 1 0 160 80 80 0 1 1 0-160z">
+                                       </path>
+
+                                   </svg>
+                                   <input type="hidden" name="camas" id="camas" :value="dados.camas">
+                                   <span><strong>Camas:</strong> <span x-text="dados.camas"></span></span>
+                               </div>
                            </div>
 
-                           <!-- CAMAS -->
-                           <div class="flex items-center gap-2">
-                               <svg class="w-[20px] h-[20px] fill-[#151516]" viewBox="0 0 640 512"
-                                   xmlns="http://www.w3.org/2000/svg">
+                           <br>
+                           <div class="flex justify-center gap-3 mt-8">
 
-                                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                   <path
-                                       d="M32 32c17.7 0 32 14.3 32 32V320H288V160c0-17.7 14.3-32 32-32H544c53 0 96 43 96 96V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V416H352 320 64v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V64C0 46.3 14.3 32 32 32zm144 96a80 80 0 1 1 0 160 80 80 0 1 1 0-160z">
-                                   </path>
+                               <button
+    type="button"
+    @click="modalAtivo = false"
+    class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">
+    Cancelar
+</button>
 
-                               </svg>
-                               <span><strong>Camas:</strong> <span x-text="dados.camas"></span></span>
+<button
+    type="submit"
+    onclick="verDetalhes()"
+    name="btnReservar"
+    id="btnReservar"
+    class="bg-[#1c1c6b] hover:bg-[#161656] text-white px-4 py-2 rounded">
+    Reservar
+</button>
+
                            </div>
-                       </div>
-
-                       <br>
-                       <div class="flex justify-center gap-3 mt-8">
-                           <button @click="modalAtivo = false"
-                               class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">
-                               Cancelar
-                           </button>
-                           <form :action="'/reserva/' + dados.id" method="GET">
-                               <button type="submit" name="btnReservar" id="btnReservar"
-                                   class="bg-[#1c1c6b] hover:bg-[#161656] text-white px-4 py-2 rounded">
-                                   Reservar
-                               </button>
-                           </form>
                        </div>
                    </div>
                </div>
-           </div>
+           </form>
 
        </div>
+
+       <script>
+           function verDetalhes() {
+    const formData = new FormData();
+    formData.append('modelo', document.querySelector('input[name="modelo"]').value);
+    formData.append('cidade', document.querySelector('input[name="cidade"]').value);
+    formData.append('filial', document.querySelector('input[name="filial"]').value);
+    formData.append('quartos', document.querySelector('input[name="quartos"]').value);
+    formData.append('banheiros', document.querySelector('input[name="banheiros"]').value);
+    formData.append('hospedes', document.querySelector('input[name="hospedes"]').value);
+    formData.append('camas', document.querySelector('input[name="camas"]').value);
+        formData.append('data_inicio', document.querySelector('input[name="data_inicio"]').value);
+            formData.append('preco_diario', document.querySelector('input[name="preco_diario"]').value);
+
+            formData.append('data_fim', document.querySelector('input[name="data_fim"]').value);
+
+    formData.append('imagem', document.querySelector('img').src);
+
+
+    fetch('/reserva/create', {
+        method: 'GET',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = '/reserva/sucesso'; // Redireciona após o envio bem-sucedido
+        } else {
+            alert('Erro ao enviar os dados!');
+        }
+    });
+}
+       </script>
 
        {{-- Rodapé --}}
        <footer class="flex flex-col items-center bg-[#151516] text-center text-white">

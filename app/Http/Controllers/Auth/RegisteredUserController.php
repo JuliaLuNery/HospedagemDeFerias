@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
 
-        return redirect()->route('site.index');   //Envio de e-mail.
+        return redirect()->route('site');
 
 
         // return redirect()->route('site.index');

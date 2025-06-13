@@ -34,22 +34,38 @@ class FiltroController extends Controller
 
 
 
+        // $query = Localizacao::with('bemLocavel')
+        //     ->whereHas('bemLocavel', function ($q) use ($hospedes) {
+        //         if ($hospedes) {
+        //             $q->where('numero_hospedes', '>=', $hospedes);
+        //         }
+        //     });
 
+        // // Filtrar por local (cidade/filial, se necessário)
+        // if ($local) {
+        //     $query->where(function ($q) use ($local) {
+        //         $q->where('cidade', 'like', "%{$local}%")
+        //             ->orWhere('filial', 'like', "%{$local}%");
+        //     });
+        // }
 
-        $query = Localizacao::with('bemLocavel')
-            ->whereHas('bemLocavel', function ($q) use ($hospedes) {
+        $query = BensLocaveis::with('localizacao')
+            ->where(function ($q) use ($hospedes) {
                 if ($hospedes) {
                     $q->where('numero_hospedes', '>=', $hospedes);
                 }
+            })
+            ->whereHas('localizacao', function ($q) use ($local) {
+                if ($local) {
+                    $q->where('cidade', 'like', "%{$local}%")
+                        ->orWhere('filial', 'like', "%{$local}%");
+                }
             });
 
-        // Filtrar por local (cidade/filial, se necessário)
-        if ($local) {
-            $query->where(function ($q) use ($local) {
-                $q->where('cidade', 'like', "%{$local}%")
-                    ->orWhere('filial', 'like', "%{$local}%");
-            });
-        }
+        $bem_locavel = $query->get();
+
+        return view('site.index', compact('bem_locavel'));
+
 
         // Eliminar apartamentos com reservas conflitantes
         if ($data_inicio && $data_fim) {

@@ -1,48 +1,12 @@
-<head>
-    {{-- Fonte --}}
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-
-<title>Reserva | Hospedagem de Férias</title>
-
-</head>
-
-
 @extends('layouts.paginaInterna')
 
 @section('content')
 @csrf
 
-<div class="bg-[#f7f4f4] mx-14" >
-<h1 class="text-[#1c1c6b] font-semibold font-titulo text-3xl">A sua reserva</h1>
+<h1 class="text-[#1c1c6b] font-semibold">A sua reserva</h1>
 
 <div
   class="block w-3/4 rounded-lg bg-white p-6 shadow-secondary-1 dark:bg-surface-dark dark:text-white text-surface">
-
-<ul class="w-96 text-surface dark:text-white">
-  <li
-    class="w-full border-b-2 border-neutral-100 py-4 dark:border-white/10">
-    An item
-  </li>
-  <li
-    class="w-full border-b-2 border-neutral-100 py-4 dark:border-white/10">
-    A second item
-  </li>
-  <li
-    class="w-full border-b-2 border-neutral-100 py-4 dark:border-white/10">
-    A third item
-  </li>
-  <li
-    class="w-full border-b-2 border-neutral-100 py-4 dark:border-white/10">
-    A fourth item
-  </li>
-  <li class="w-full py-4">And a fifth one</li>
-</ul>
-
   <h5
     class="mb-2 text-xl font-medium leading-tight">
     Card title
@@ -58,12 +22,6 @@
     Button
   </button>
 </div>
-//mostrar os dados do produto
-        $dados = ([ $data_inicio, $data_fim, $imagem, $modelo, $cidade, $filial, $quartos, $hospedes, $banheiros, $camas, $preco_total]);
-
-        //mostrar a ref multibanco entidade
-        //botao pagar
-        /chama a rota que grava na BD e redireciona para home/dashbord
 
 
 <form method="POST" action="{{ route('reserva.store') }}">
@@ -80,5 +38,4 @@
     <button type="submit">Prosseguir</button>
 </form>
 
-</div>
 @endsection
