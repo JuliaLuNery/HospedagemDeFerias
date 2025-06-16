@@ -63,7 +63,7 @@
                                 </div>
 
                                 <!-- Ações -->
-                                     <div class="mt-2">
+                                <div class="mt-2">
                                     @if (Route::has('password.request'))
                                         <a class="underline text-sm text-gray-600 hover:text-gray-900"
                                             href="{{ route('password.request') }}">
@@ -83,11 +83,14 @@
 
                             <!-- Botão de Registro -->
                             <div class="flex items-center justify-between mt-8">
-                                <p class="text-sm">Ainda não possui uma conta? <br> Crie agora mesmo.</p>
-                                <button type="button"
-                                    class="inline-block ml-9 rounded border-2 border-[#151516] bg-[#151516] px-6 py-3 text-xs font-medium uppercase leading-normal text-[#ededf2] transition duration-150 ease-in-out hover:bg-[#2a2a2c] hover:text-white focus:outline-none">
-                                    Registrar
-                                </button>
+                                <p class="text-sm">Ainda não possui uma conta? <br> <strong> Crie agora mesmo.</strong></p>
+                                <form method="GET" action="{{ route('register') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="inline-block ml-9 rounded border-2 border-[#151516] bg-[#151516] px-6 py-3 text-xs font-medium uppercase leading-normal text-[#ededf2] transition duration-150 ease-in-out hover:bg-[#2a2a2c] hover:text-white focus:outline-none">
+                                        Registrar
+                                    </button>
+                                </form>
                             </div>
                         </div> <!-- fim do md:mx-6 -->
                     </div> <!-- fim do g-0 -->
