@@ -1,5 +1,5 @@
 Website Hospedagem de Férias
-
+## 🎯 Funcionalidades
 
 # 💬 Módulo de Chat em Laravel 12
 
