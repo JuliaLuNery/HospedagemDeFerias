@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('data_inicio');
             $table->date('data_fim');
             $table->decimal('preco_total', 10, 2)->nullable();   //10 números antes da vírgula e 2 números depois da vírgula
-            $table->enum('status', ['reservado', 'cancelado'])->default('reservado');
+            $table->enum('status', ['pendente', 'confirmado', 'cancelado'])->default('pendente');
             $table->timestamps();
 
                 $table->foreign('bem_locavel_id')->references('id')->on('bens_locaveis')->onDelete('cascade');

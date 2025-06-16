@@ -45,4 +45,5 @@ class Reservas extends Model
     {
         return $this->status === 'reservado' && $this->data_fim->isFuture();
     }
+
 }

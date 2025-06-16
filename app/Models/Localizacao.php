@@ -27,7 +27,7 @@ class Localizacao extends Model
 
         public function bemLocavel()
     {
-        return $this->hasMany(BensLocaveis::class);
+        return $this->hasMany(BensLocaveis::class, 'localizacao_id');
     }
 
 

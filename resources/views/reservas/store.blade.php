@@ -26,6 +26,9 @@
 
 <form method="POST" action="{{ route('reserva.store') }}">
     @csrf
+    {{-- @dd($dados) --}}
+     <input type="hidden" name="bem_locavel_id" value="{{ $dados['bem_locavel_id'] ?? 'NÃO RECEBIDO' }}">
+
     <!-- Campos ocultos -->
     @foreach ($dados as $k => $v)
         <input type="hidden" name="{{ $k }}" value="{{ $v }}">

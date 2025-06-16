@@ -9,19 +9,22 @@ use Illuminate\Http\Request;
 class PagamentoController extends Controller
 {
 
-public function processar(Request $request)
-{
-    $reserva = Reservas::findOrFail($request->reserva_id);
+    public function processar(Request $request)
+    {
+        $reserva = Reservas::findOrFail($request->reserva_id);
 
-    switch ($reserva->forma_pagamento) {
-        case 'paypal':
-            return redirect()->route('pagamento.sucesso', ['reserva_id' => $reserva->id]);
-        case 'cartao':
-            return redirect()->route('pagamento.sucesso', ['reserva_id' => $reserva->id]);
-        case 'multibanco':
-            return view('pagamento.mb-pagamento', ['reserva' => $reserva]);
+        switch ($reserva->forma_pagamento) {
+            case 'paypal':
+                return view('pagamento.paypal', ['reserva' => $reserva]);
+
+            case 'cartao':
+                return view('pagamento.cartao', ['reserva' => $reserva]);
+
+            case 'multibanco':
+            default:
+                return view('pagamento.mb-pagamento', ['reserva' => $reserva]);
+        }
     }
-}
 
 
     // public function processar(Request $r)
@@ -41,22 +44,48 @@ public function processar(Request $request)
 
     public function sucesso(Request $request)
     {
-    $reserva = Reservas::findOrFail($request->reserva_id);
-    $reserva->estado = 'paga';
-    $reserva->save();
+        $reserva = Reservas::findOrFail($request->reserva_id);
+        $reserva->estado = 'paga';
+        $reserva->save();
 
-    return view('pagamento.sucesso', ['reserva' => $reserva]);
+        return view('pagamento.sucesso', ['reserva' => $reserva]);
     }
 
 
     public function cancelar(Request $request)
     {
-    $reserva = Reservas::findOrFail($request->reserva_id);
-    $reserva->estado = 'cancelada';
-    $reserva->save();
+        $reserva = Reservas::findOrFail($request->reserva_id);
+        $reserva->estado = 'cancelada';
+        $reserva->save();
 
-    return view('pagamento.cancelado', ['reserva' => $reserva]);
+        return view('pagamento.cancelado', ['reserva' => $reserva]);
     }
+
+
+    public function confirmarPagamento(Request $request)
+    {
+        $reserva = Reservas::findOrFail($request->reserva_id);
+        $reserva->status = 'confirmado';
+        $reserva->save();
+
+        return response()->json([
+            'message' => 'Pagamento realizado com sucesso!',
+            'redirect' => route('site')
+        ]);
+    }
+
+    public function confirmar($reserva_id)
+    {
+        $reserva = \App\Models\Reservas::where('id', $reserva_id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        $reserva->status = 'confirmado';
+        $reserva->save();
+
+        return response()->json(['status' => 'ok']);
+    }
+
 
 
 

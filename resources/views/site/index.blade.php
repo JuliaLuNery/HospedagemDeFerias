@@ -34,7 +34,7 @@
                            <div class="flex justify-between items-center mb-2">
                                <h2 class="text-xl font-semibold text-center mb-2 font-texto">{{ $dado->modelo }}</h2>
 
-                               {{-- Avaliação --}}  
+                               {{-- Avaliação --}}
                                <div class="flex items-center gap-1 mb-2 font-semibold">
                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
                                        class="w-5 h-5 text-yellow-500">
@@ -47,10 +47,14 @@
 
 
 
-                           <p class="text-slate-600 mb-1 font-semibold">
-                               Local: {{ $dado->localizacao->cidade }} | {{ $dado->localizacao->filial }}
-                           </p>
+                           @php
+                               $cidade = $dado->localizacao->cidade ?? 'Cidade não disponível';
+                               $filial = $dado->localizacao->filial ?? 'Filial não disponível';
+                           @endphp
 
+                           <p class="text-slate-600 mb-1 font-semibold">
+                               Local: {{ $cidade }} | {{ $filial }}
+                           </p>
                            {{-- Descrição --}}
                            <p class="text-slate-600 text-sm mb-3 font-medium">
                                {{ $dado->marca->observacao }}
@@ -71,10 +75,11 @@
                            <!-- BOTÃO QUE ATIVA O MODAL COM DADOS -->
                            <button
                                @click="modalAtivo = true; dados = {
+                            id: '{{ $dado->id }}',
                             imagem: '{{ $dado->observacao }}',
                             modelo: '{{ $dado->modelo }}',
-                            cidade: '{{ $dado->localizacao->cidade }}',
-                            filial: '{{ $dado->localizacao->filial }}',
+                            cidade: '{{ $dado->localizacao->cidade ?? 'Cidade não informada' }}',
+                            filial: '{{ $dado->localizacao->filial ?? 'Filial não informada' }}',
                             quartos: '{{ $dado->numero_quartos }}',
                             hospedes: '{{ $dado->numero_hospedes }}',
                             banheiros: '{{ $dado->numero_casas_banho }}',
@@ -111,7 +116,7 @@
 
                            <!-- FILIAL -->
                            <div class="flex items-center gap-2">
-                               <input type="hidden" name="filial"  id="filial":value="dados.filial">
+                               <input type="hidden" name="filial" id="filial":value="dados.filial">
                                <span><strong>Filial:</strong> <span x-text="dados.filial"></span></span>
                            </div>
 
@@ -180,21 +185,53 @@
                            <br>
                            <div class="flex justify-center gap-3 mt-8">
 
-                               <button
-    type="button"
-    @click="modalAtivo = false"
-    class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">
-    Cancelar
-</button>
+                               <a href="{{ route('reserva.create', [
+                                   'bem_locavel_id' => $dado->id,
+                                   'modelo' => $dado->modelo,
+                                   'imagem' => $dado->observacao,
+                                   'cidade' => $dado->localizacao->cidade ?? 'Não informada',
+                                   'filial' => $dado->localizacao->filial ?? 'Não informada',
+                                   'quartos' => $dado->numero_quartos,
+                                   'banheiros' => $dado->numero_casas_banho,
+                                   'camas' => $dado->numero_camas,
+                                   'preco_diario' => $dado->preco_diario,
+                                   'data_inicio' => request('data_inicio'),
+                                   'data_fim' => request('data_fim'),
+                                   'hospedes' => request('hospedes'),
+                               ]) }}"
+                                   class="bg-[#1c1c6b] hover:bg-[#161656] text-white px-4 py-2 rounded">
+                                   Reservar
+                               </a>
 
-<button
-    type="submit"
-    onclick="verDetalhes()"
-    name="btnReservar"
-    id="btnReservar"
-    class="bg-[#1c1c6b] hover:bg-[#161656] text-white px-4 py-2 rounded">
-    Reservar
-</button>
+
+
+
+                               {{-- <button type="button" @click="modalAtivo = false"
+                                   class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded">
+                                   Cancelar
+                               </button>
+
+                               <input type="hidden" name="data_inicio" :value="dados.data_inicio">
+                               <input type="hidden" name="data_fim" :value="dados.data_fim">
+                               <input type="hidden" name="imagem" :value="dados.imagem">
+                               <input type="hidden" name="modelo" :value="dados.modelo">
+                               <input type="hidden" name="cidade" :value="dados.cidade">
+                               <input type="hidden" name="filial" :value="dados.filial">
+                               <input type="hidden" name="quartos" :value="dados.quartos">
+                               <input type="hidden" name="hospedes" :value="dados.hospedes">
+                               <input type="hidden" name="banheiros" :value="dados.banheiros">
+                               <input type="hidden" name="camas" :value="dados.camas">
+                               <input type="hidden" name="preco_diario" :value="dados.preco_diario">
+
+                               <button type="submit" name="btnReservar" id="btnReservar"
+                                   class="bg-[#1c1c6b] hover:bg-[#161656] text-white px-4 py-2 rounded">
+                                   Reservar
+                               </button> --}}
+
+                               {{-- <button type="submit" onclick="verDetalhes()" name="btnReservar" id="btnReservar"
+                                   class="bg-[#1c1c6b] hover:bg-[#161656] text-white px-4 py-2 rounded">
+                                   Reservar
+                               </button> --}}
 
                            </div>
                        </div>
@@ -204,39 +241,40 @@
 
        </div>
 
-       <script>
+
+       {{-- <script>
            function verDetalhes() {
-    const formData = new FormData();
-    formData.append('modelo', document.querySelector('input[name="modelo"]').value);
-    formData.append('cidade', document.querySelector('input[name="cidade"]').value);
-    formData.append('filial', document.querySelector('input[name="filial"]').value);
-    formData.append('quartos', document.querySelector('input[name="quartos"]').value);
-    formData.append('banheiros', document.querySelector('input[name="banheiros"]').value);
-    formData.append('hospedes', document.querySelector('input[name="hospedes"]').value);
-    formData.append('camas', document.querySelector('input[name="camas"]').value);
-        formData.append('data_inicio', document.querySelector('input[name="data_inicio"]').value);
-            formData.append('preco_diario', document.querySelector('input[name="preco_diario"]').value);
+               const formData = new FormData();
+               formData.append('modelo', document.querySelector('input[name="modelo"]').value);
+               formData.append('cidade', document.querySelector('input[name="cidade"]').value);
+               formData.append('filial', document.querySelector('input[name="filial"]').value);
+               formData.append('quartos', document.querySelector('input[name="quartos"]').value);
+               formData.append('banheiros', document.querySelector('input[name="banheiros"]').value);
+               formData.append('hospedes', document.querySelector('input[name="hospedes"]').value);
+               formData.append('camas', document.querySelector('input[name="camas"]').value);
+               formData.append('data_inicio', document.querySelector('input[name="data_inicio"]').value);
+               formData.append('preco_diario', document.querySelector('input[name="preco_diario"]').value);
 
-            formData.append('data_fim', document.querySelector('input[name="data_fim"]').value);
+               formData.append('data_fim', document.querySelector('input[name="data_fim"]').value);
 
-    formData.append('imagem', document.querySelector('img').src);
+               formData.append('imagem', document.querySelector('img').src);
 
 
-    fetch('/reserva/create', {
-        method: 'GET',
-        body: formData,
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-    }).then(response => {
-        if (response.ok) {
-            window.location.href = '/reserva/sucesso'; // Redireciona após o envio bem-sucedido
-        } else {
-            alert('Erro ao enviar os dados!');
-        }
-    });
-}
-       </script>
+               fetch('/reserva/create', {
+                   method: 'GET',
+                   body: formData,
+                   headers: {
+                       'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                   }
+               }).then(response => {
+                   if (response.ok) {
+                       window.location.href = '/reserva/sucesso'; // Redireciona após o envio bem-sucedido
+                   } else {
+                       alert('Erro ao enviar os dados!');
+                   }
+               });
+           }
+       </script> --}}
 
        {{-- Rodapé --}}
        <footer class="flex flex-col items-center bg-[#151516] text-center text-white">

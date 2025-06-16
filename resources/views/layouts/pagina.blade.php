@@ -60,7 +60,7 @@
         <nav
             class="block w-full max-w-screen-xlg px-4 py-2 mx-auto text-white bg-white shadow-md rounded-md lg:px-8 lg:py-7 mt-0">
             <div class="container flex flex-wrap items-center justify-between mx-auto text-slate-800">
-                <img src="Imagens/Logo_Principal.png" alt="Logo Principal" class="h-16 w-auto">
+                <a href="/"> <img src="{{ asset('Imagens/Logo_Principal.png') }}" alt="Logo Principal" class="h-16 w-auto"></a>
                 <a href="site/index" class="mr-4 block cursor-pointer py-1.5 text-base text-slate-800 font-semibold">
                 </a>
                 <div class="hidden lg:block">
@@ -68,7 +68,7 @@
                         <li class="flex items-center p-1 text-sm gap-x-2 text-slate-600">
 
 
-                            <a href="#" class="flex items-center">
+                            <a href="minhas-reservas" class="flex items-center">
                                 Reservas
                             </a>
                         </li>
