@@ -1,6 +1,5 @@
 ## Website Hospedagem de Férias
 
-
 Este projeto foi desenvolvido utilizando **Laravel 12**, com **MySQL (MariaDB)** como banco de dados, **Breeze** para autenticação e **Blade** para renderização de interfaces. O objetivo principal é desenvolver um website de locações de hospedagens simples e intuitivo para o usuário.
 
 ## 🚀 Tecnologias Utilizadas
